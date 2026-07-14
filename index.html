@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天谁最欧</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f7fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            user-select: none;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+
+        #display-area {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #e74c3c;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        #control-btn {
+            padding: 15px 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease 0s;
+            outline: none;
+        }
+
+        #control-btn:hover {
+            background-color: #2980b9;
+            box-shadow: 0 15px 20px rgba(41, 128, 185, 0.4);
+            transform: translateY(-3px);
+        }
+
+        #control-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(41, 128, 185, 0.4);
+        }
+        
+        /* 停止状态的按钮样式 */
+        #control-btn.stop-state {
+            background-color: #e74c3c;
+            box-shadow: 0 8px 15px rgba(231, 76, 60, 0.2);
+        }
+
+        #control-btn.stop-state:hover {
+            background-color: #c0392b;
+            box-shadow: 0 15px 20px rgba(231, 76, 60, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>今天谁最欧</h1>
+    <div id="display-area">点击开始</div>
+    <button id="control-btn">开始</button>
+
+    <script>
+        // 替换为你提供的名单
+        const names = [
+            "如故", "飞鱼", "泛泛", "耶耶邪邪", "风风", 
+            "心心", "寒寒", "太阳咸菜", "冷琴", "南宫", 
+            "挽颜", "木源泽", "周易...易喔", "往既"
+        ];
+        
+        let timer = null;
+        let isRunning = false;
+        
+        const displayArea = document.getElementById('display-area');
+        const controlBtn = document.getElementById('control-btn');
+        
+        controlBtn.addEventListener('click', function() {
+            if (!isRunning) {
+                // 点击开始
+                isRunning = true;
+                controlBtn.textContent = '停止';
+                controlBtn.classList.add('stop-state');
+                
+                // 开启高频定时器切换名字
+                timer = setInterval(() => {
+                    const randomIndex = Math.floor(Math.random() * names.length);
+                    displayArea.textContent = names[randomIndex];
+                }, 50); // 50毫秒切换一次，产生快速滚动的视觉效果
+                
+            } else {
+                // 点击停止
+                isRunning = false;
+                clearInterval(timer);
+                controlBtn.textContent = '开始';
+                controlBtn.classList.remove('stop-state');
+            }
+        });
+    </script>
+</body>
+</html>
